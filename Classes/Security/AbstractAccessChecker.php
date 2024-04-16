@@ -9,7 +9,8 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
 use TYPO3\CMS\Core\Context\UserAspect;
-use TYPO3\CMS\Core\ExpressionLanguage\Resolver;
+// use TYPO3\CMS\Core\ExpressionLanguage\Resolver;
+use SourceBroker\T3api\ExpressionLanguage\Resolver;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AbstractAccessChecker
