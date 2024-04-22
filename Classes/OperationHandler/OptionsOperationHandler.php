@@ -48,6 +48,7 @@ class OptionsOperationHandler extends AbstractOperationHandler
      */
     public function handle(OperationInterface $operation, Request $request, array $route, ?ResponseInterface &$response)
     {
+        // @extensionScannerIgnoreLine
         $options = $this->corsService->getOptions();
         $response = $response instanceof ResponseInterface ? $response : new Response();
 

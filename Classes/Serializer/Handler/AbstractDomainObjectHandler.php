@@ -198,10 +198,12 @@ class AbstractDomainObjectHandler extends AbstractHandler implements Deserialize
             );
         }
 
-        $property = ObjectAccess::getProperty($parentObject, $propertyMetadata->name, false);
+        $property = ObjectAccess::getProperty($parentObject, $propertyMetadata->name);
 
         if (
+			   // @extensionScannerIgnoreLine
             $propertyMetadata->type['name'] === ObjectStorage::class
+			   // @extensionScannerIgnoreLine
             || is_subclass_of($propertyMetadata->type['name'], ObjectStorage::class)
         ) {
             return $property->contains($object);

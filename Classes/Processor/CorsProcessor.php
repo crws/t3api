@@ -28,7 +28,7 @@ class CorsProcessor implements ProcessorInterface
         ) {
             return;
         }
-
+		  // @extensionScannerIgnoreLine
         $options = $this->corsService->getOptions();
         $requestOrigin = $request->headers->get('Origin');
 

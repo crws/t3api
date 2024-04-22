@@ -447,8 +447,10 @@ class OpenApiBuilder
         string $mode
     ): Schema {
         $schema = self::getPropertySchemaFromPropertyType(
+				// @extensionScannerIgnoreLine
             $propertyMetadata->type['name'] ?? '',
             $mode,
+			   // @extensionScannerIgnoreLine
             $propertyMetadata->type['params'] ?? []
         )->readOnly($propertyMetadata->readOnly);
 
