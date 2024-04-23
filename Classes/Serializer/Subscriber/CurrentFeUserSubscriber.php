@@ -53,7 +53,7 @@ class CurrentFeUserSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         foreach ($metadata->propertyMetadata as $propertyName => $propertyMetadata) {
 			   // @extensionScannerIgnoreLine
-            if ($propertyMetadata->type['name'] !== CurrentFeUserHandler::TYPE) {
+            if (($propertyMetadata->type['name'] ?? null) !== CurrentFeUserHandler::TYPE) {
                 continue;
             }
 
