@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SourceBroker\T3api\Filter;
 
-use Doctrine\DBAL\FetchMode;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use SourceBroker\T3api\Domain\Model\ApiFilter;
@@ -22,8 +21,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 class SearchFilter extends AbstractFilter implements OpenApiSupportingFilterInterface
 {
     /**
-     * @param ApiFilter $apiFilter
-     *
      * @return Parameter[]
      */
     public static function getOpenApiParameters(ApiFilter $apiFilter): array
@@ -74,13 +71,8 @@ class SearchFilter extends AbstractFilter implements OpenApiSupportingFilterInte
     }
 
     /**
-     * @param string $property
-     * @param array $values
-     * @param QueryInterface $query
-     * @param ApiFilter $apiFilter
-     *
-     * @throws UnexpectedTypeException
      * @return int[]
+     * @throws UnexpectedTypeException
      */
     protected function matchAgainstFindIds(
         string $property,
@@ -98,8 +90,12 @@ class SearchFilter extends AbstractFilter implements OpenApiSupportingFilterInte
             ->getQueryBuilderForTable($tableName);
 
         if ($this->isPropertyNested($property)) {
-            $joinedProperty = $this->addJoinsForNestedProperty($property, $rootAlias, $query, $queryBuilder);
-            [$tableAlias, $propertyName] = $joinedProperty;
+            [$tableAlias, $propertyName] = $this->addJoinsForNestedProperty(
+                $property,
+                $rootAlias,
+                $query,
+                $queryBuilder
+            );
         } else {
             $tableAlias = $rootAlias;
             $propertyName = $property;
@@ -122,9 +118,9 @@ class SearchFilter extends AbstractFilter implements OpenApiSupportingFilterInte
         return $queryBuilder
             ->select($rootAlias . '.uid')
             ->from($tableName, $rootAlias)
-            ->andWhere($queryBuilder->expr()->or(...$conditions))
+            ->andWhere($queryBuilder->expr()->orX(...$conditions))
             ->setParameters($binds)
-            ->execute()
-            ->fetchAll(FetchMode::COLUMN);
+            ->executeQuery()
+            ->fetchFirstColumn();
     }
 }
